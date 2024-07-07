@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
     } else if (strcmp(argv[1], "cd") == 0) {
         print_current_directory();
     } else {
-        fprintf(stderr, "Invalid command.\n");
+        fprintf(stderr, "Invalid command \n");
         return 1;
     }
 
