@@ -23,7 +23,7 @@ void print_current_directory() {
     }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *ip[]) {
     char current_dir[PATH_MAX];
     char *last_dir = getenv("OLDPWD");
 
@@ -33,11 +33,11 @@ int main(int argc, char *argv[]) {
     }
 
     if (argc != 2) {
-        fprintf(stderr, "Usage: %s <command>\n", argv[0]);
+        fprintf(stderr, "Usage: %s <command>\n", ip[0]);
         return 1;
     }
 
-    if (strcmp(argv[1], "cd -") == 0) {
+    if (strcmp(ip[1], "cd -") == 0) {
         if (last_dir == NULL) {
             fprintf(stderr, "No previous directory to change to.\n");
             return 1;
@@ -51,8 +51,8 @@ int main(int argc, char *argv[]) {
             return 1;
         }
         print_previous_directory();
-    } else if (strncmp(argv[1], "cd ", 3) == 0) {
-        const char *new_dir = argv[1] + 3;
+    } else if (strncmp(ip[1], "cd ", 3) == 0) {
+        const char *new_dir = ip[1] + 3;
         if (chdir(new_dir) == -1) {
             perror("chdir() error");
             return 1;
@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
             return 1;
         }
         print_current_directory();
-    } else if (strcmp(argv[1], "cd") == 0) {
+    } else if (strcmp(ip[1], "cd") == 0) {
         print_current_directory();
     } else {
         fprintf(stderr, "Invalid command.\n");
