@@ -5,10 +5,19 @@
 
 #define PATH_MAX 4096
 
+void print_previous_directory() {
+    char wd[PATH_MAX];
+    if (getcwd(wd, sizeof(wd)) != NULL) {
+        printf("Previous directory: %s\n", wd);
+    } else {
+        perror("getcwd() error");
+    }
+}
+
 void print_current_directory() {
-    char cwd[PATH_MAX];
-    if (getcwd(cwd, sizeof(cwd)) != NULL) {
-        printf("Current directory: %s\n", cwd);
+    char wd[PATH_MAX];
+    if (getcwd(wd, sizeof(wd)) != NULL) {
+        printf("Current directory: %s\n", wd);
     } else {
         perror("getcwd() error");
     }
@@ -41,7 +50,7 @@ int main(int argc, char *argv[]) {
             perror("getcwd() error");
             return 1;
         }
-        print_current_directory();
+        print_previous_directory();
     } else if (strncmp(argv[1], "cd ", 3) == 0) {
         const char *new_dir = argv[1] + 3;
         if (chdir(new_dir) == -1) {
@@ -56,7 +65,7 @@ int main(int argc, char *argv[]) {
     } else if (strcmp(argv[1], "cd") == 0) {
         print_current_directory();
     } else {
-        fprintf(stderr, "Invalid command \n");
+        fprintf(stderr, "Invalid command.\n");
         return 1;
     }
 
